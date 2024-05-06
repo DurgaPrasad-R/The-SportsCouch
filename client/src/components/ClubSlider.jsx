@@ -7,7 +7,7 @@ import rcb from "../assets/rcb.png";
 import srh from "../assets/srh.png";
 const ClubSlider = () => {
   return (
-    <div className="clubs m-4">
+    <div className="clubs mx-10">
       <h1 className="title font-bold text-2xl flex justify-center p-4">
         Popular Clubs
       </h1>
