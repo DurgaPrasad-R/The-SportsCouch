@@ -14,7 +14,7 @@ const Promo = () => {
         className="w-full h-full object-cover"
       ></video>
       <div className="box-border absolute w-full h-full top-10 items-center flex flex-col justify-center text-white">
-        <p>The Sports Couch</p>
+        {/*<p>The Sports Couch</p>*/}
         <button
           className="p-2 bg-blue-500 rounded-md flex justify-center items-center gap-2 hover:bg-blue-800"
           onMouseEnter={() => setIsHovered(true)}

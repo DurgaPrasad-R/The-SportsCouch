@@ -11,7 +11,7 @@ const ClubSlider = () => {
       <h1 className="title font-bold text-2xl flex justify-center p-4">
         Popular Clubs
       </h1>
-      <Marquee>
+      <Marquee className="my-4">
         <img className="mr-10 w-52" src={vsp} alt="vsp" />
         <img className="mr-10 w-52" src={csk} alt="vsp" />
         <img className="mr-10 w-52" src={dc} alt="vsp" />

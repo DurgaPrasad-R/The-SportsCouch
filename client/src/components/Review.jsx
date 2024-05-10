@@ -4,7 +4,7 @@ import { FaRegStar } from "react-icons/fa";
 const Review = () => {
   return (
     <>
-      <h1 className="title font-bold text-2xl flex justify-center mt-4">
+      <h1 className="title font-bold text-2xl flex justify-center p-4">
         Reviews
       </h1>
       <div className="flex mx-4">
