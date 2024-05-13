@@ -9,7 +9,7 @@ const SportsBanner = () => {
   return (
     <div className="p-2">
       <h1 className="title font-bold text-2xl flex justify-center p-4">
-        Choose a Sport
+        Select a Sport
       </h1>
       <div className="p-4 flex flex-wrap gap-10 justify-center">
         <div className="bg-black text-white w-fit flex flex-row items-center justify-center rounded-md p-2 gap-2">

@@ -1,3 +1,4 @@
+import navLogo from "../assets/nav-logo.png";
 const Footer = () => {
   return (
     <>
@@ -31,7 +32,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="w-1/3 flex flex-col gap-4 p-4">
-          <p className="logo font-semibold text-lg italic">The Sports Couch</p>
+          <img src={navLogo} alt="logo" className="nav-logo w-24" />
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -43,7 +44,7 @@ const Footer = () => {
         </div>
       </div>
       <hr className="mx-10 my-4" />
-      <div className="mx-10 flex justify-around">
+      <div className="mx-10 flex justify-around my-2">
         <div className="flex gap-4">
           <p>Privacy</p>
           <p>Services</p>
