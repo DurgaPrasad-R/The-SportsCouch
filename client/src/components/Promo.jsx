@@ -1,4 +1,5 @@
 import promo from "../assets/promo.mp4";
+import { Link } from "react-router-dom";
 import { HiLightBulb } from "react-icons/hi";
 import { FaLightbulb } from "react-icons/fa6";
 import { useState } from "react";
@@ -14,13 +15,12 @@ const Promo = () => {
         className="w-full h-full object-cover"
       ></video>
       <div className="box-border absolute w-full h-full top-10 items-center flex flex-col justify-center text-white">
-        {/*<p>The Sports Couch</p>*/}
         <button
           className="p-2 bg-blue-500 rounded-md flex justify-center items-center gap-2 hover:bg-blue-800"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          Sign In{" "}
+          <Link to="/user">Sign In </Link>
           {isHovered ? (
             <HiLightBulb className="w-5 h-5" />
           ) : (

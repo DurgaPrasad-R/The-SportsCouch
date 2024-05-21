@@ -64,6 +64,10 @@ const CreateSession = () => {
         />
       </div>
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
+        <p className="my-2">Sport Name</p>
+        <p className="my-2 pl-4">Cricket</p>
+      </div>
+      <div className="createsession-itemfield text-[#7b7b7b] w-full">
         <p className="my-2">Select Your Team</p>
         <select
           name="team"

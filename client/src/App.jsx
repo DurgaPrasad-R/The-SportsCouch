@@ -1,20 +1,18 @@
-// import Promo from "./components/Promo";
-// import ClubSlider from "./components/ClubSlider";
-// import Review from "./components/Review";
-// import FAQ from "./components/FAQ";
-// import Challenge from "./components/Challenge";
-// import RecentlyPlayed from "./components/RecentlyPlayed";
-// import Footer from "./components/Footer";
-// import SportsBanner from "./components/SportsBanner";
-import Header from "./components/Header";
-// import CreateSport from "./components/CreateSport";
-// import SessionCard from "./components/SessionCard";
+import HomePage from "./pages/HomePage";
+import UserDashBoard from "./pages/UserDashBoard";
 import Options from "./pages/Options";
+import { Routes, Route } from "react-router-dom";
+import UserLayout from "./pages/UserLayout";
 const App = () => {
   return (
-    <div className="font-roboto bg-[#f6f6f6]">
-      <Header />
-      <Options />
+    <div className="font-poppins">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/user" element={<UserLayout />}>
+          <Route index element={<UserDashBoard />} />
+          <Route path="options/*" element={<Options />} />
+        </Route>
+      </Routes>
     </div>
   );
 };

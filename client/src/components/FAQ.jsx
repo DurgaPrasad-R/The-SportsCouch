@@ -58,17 +58,17 @@ const FAQSection = () => {
       <FAQ
         question="What is the purpose of this app?"
         answer="This app is designed to help you find the local matches being played and let you join teams or create a team."
-        isVisible={visibleSection === "q1"}
+        isVisible={visibleSection === "q4"}
         setIsVisible={() =>
-          setVisibleSection(visibleSection === "q1" ? "" : "q1")
+          setVisibleSection(visibleSection === "q4" ? "" : "q4")
         }
       />
       <FAQ
         question="What is the purpose of this app?"
         answer="This app is designed to help you find the local matches being played and let you join teams or create a team."
-        isVisible={visibleSection === "q1"}
+        isVisible={visibleSection === "q5"}
         setIsVisible={() =>
-          setVisibleSection(visibleSection === "q1" ? "" : "q1")
+          setVisibleSection(visibleSection === "q5" ? "" : "q5")
         }
       />
     </div>
