@@ -20,7 +20,7 @@ const Promo = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <Link to="/user">Sign In </Link>
+          <Link to="/sign-in">Sign In </Link>
           {isHovered ? (
             <HiLightBulb className="w-5 h-5" />
           ) : (
