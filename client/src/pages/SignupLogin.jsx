@@ -1,6 +1,5 @@
 import WAVES from "vanta/src/vanta.waves";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 const SignupLogin = () => {
   useEffect(() => {
     WAVES({
@@ -25,6 +24,23 @@ const SignupLogin = () => {
   });
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const loginUser = async () => {
+    console.log(formData);
+    let responseDate;
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    await fetch(apiUrl + "/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        responseDate = data;
+      });
   };
   return (
     <div className="contain flex">
@@ -138,16 +154,12 @@ const SignupLogin = () => {
                 placeholder="Type here"
               />
             </div>
-            <Link to="/user">
-              <button
-                className="my-2 w-full h-10 rounded-md bg-[#6079ff] cursor-pointer text-white"
-                onClick={() => {
-                  console.log(formData);
-                }}
-              >
-                Continue
-              </button>
-            </Link>
+            <button
+              className="my-2 w-full h-10 rounded-md bg-[#6079ff] cursor-pointer text-white"
+              onClick={() => loginUser()}
+            >
+              Continue
+            </button>
             {state === "Login" ? (
               <p className="my-2">
                 Create an account?{" "}

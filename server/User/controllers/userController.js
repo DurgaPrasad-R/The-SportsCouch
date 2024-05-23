@@ -7,7 +7,9 @@ const userRegister = async (req, res) => {
   const hashedPwd = await bcrypt.hash(password, 10);
   const hasUser = await userModel.findOne({ email });
   if (hasUser) {
-    return res.status(400).json({ message: "User already exists" });
+    return res
+      .status(400)
+      .json({ message: "User already exists", success: false });
   } else {
     const user = await userModel.create({
       email,
@@ -23,7 +25,7 @@ const userRegister = async (req, res) => {
       },
     };
     const token = jwt.sign(data, "secret_ecom");
-    res.json({ message: "User created successfully ", token });
+    res.json({ success: true, message: "User created successfully ", token });
   }
 };
 
@@ -31,11 +33,15 @@ const userLogin = async (req, res) => {
   const { email, password } = req.body;
   const user = await userModel.findOne({ email });
   if (!user) {
-    return res.status(400).json({ message: "User does not exist" });
+    return res
+      .status(400)
+      .json({ message: "User does not exist", success: false });
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    return res.status(400).json({ message: "Invalid credentials" });
+    return res
+      .status(400)
+      .json({ message: "Invalid credentials", success: false });
   }
   const data = {
     user: {
@@ -43,7 +49,7 @@ const userLogin = async (req, res) => {
     },
   };
   const token = jwt.sign(data, "secret_ecom");
-  res.json({ message: "User logged in successfully", token });
+  res.json({ success: true, message: "User logged in successfully", token });
 };
 
 module.exports = { userRegister, userLogin };
