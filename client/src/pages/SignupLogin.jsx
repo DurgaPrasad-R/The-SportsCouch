@@ -1,6 +1,14 @@
 import WAVES from "vanta/src/vanta.waves";
+import spinner from "../assets/loading.gif";
 import { useEffect, useState } from "react";
+import show from "../assets/show.png";
+import hide from "../assets/hide.png";
+import loginUser from "../services/login";
+import signUp from "../services/signup";
 const SignupLogin = () => {
+  const [loading, setLoading] = useState(false);
+  const [passwordType, setPasswordType] = useState(true);
+
   useEffect(() => {
     WAVES({
       el: "#vanta",
@@ -13,6 +21,7 @@ const SignupLogin = () => {
       shininess: 50.0,
     });
   }, []);
+
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -26,22 +35,21 @@ const SignupLogin = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const loginUser = async () => {
-    console.log(formData);
-    let responseDate;
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    await fetch(apiUrl + "/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        responseDate = data;
-      });
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      if (state === "Login") {
+        await loginUser(formData);
+      } else {
+        await signUp(formData);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="contain flex">
       <div className="bg h-screen w-1/2 relative">
@@ -129,7 +137,6 @@ const SignupLogin = () => {
                       <p className="my-2">Age</p>
                       <input
                         type="number"
-                        style={{ WebkitAppearance: "none" }}
                         value={formData.age}
                         onChange={changeHandler}
                         name="age"
@@ -145,20 +152,34 @@ const SignupLogin = () => {
             </div>
             <div className=" text-[#7b7b7b] w-full">
               <p className="my-2">Password</p>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={changeHandler}
-                className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
-                placeholder="Type here"
-              />
+              <div className="flex h-10 box-border border-[1px] border-[#c3c3c3] rounded-md ">
+                <input
+                  type={passwordType ? "password" : "text"}
+                  name="password"
+                  value={formData.password}
+                  onChange={changeHandler}
+                  className="pl-4 rounded-md outline-none w-full text-[#7b7b7b]"
+                  placeholder="Type here"
+                />
+                <div
+                  className="h-full flex justify-center items-center cursor-pointer"
+                  onClick={() => setPasswordType(!passwordType)}
+                >
+                  {passwordType ? (
+                    <img src={show} className="h-6 mr-2" />
+                  ) : (
+                    <img src={hide} className="h-6 mr-2" />
+                  )}
+                </div>
+              </div>
             </div>
             <button
+              type="submit"
               className="my-2 w-full h-10 rounded-md bg-[#6079ff] cursor-pointer text-white"
-              onClick={() => loginUser()}
+              onClick={handleSubmit}
+              disabled={loading}
             >
-              Continue
+              {loading ? "Loading.." : "Continue"}
             </button>
             {state === "Login" ? (
               <p className="my-2">
@@ -196,82 +217,13 @@ const SignupLogin = () => {
           </div>
         </div>
       </div>
+      {loading && (
+        <div className="loading-overlay fixed top-0 left-0 w-full h-full opacity-50 bg-white flex justify-center items-center z-100">
+          <img src={spinner} alt="loading.." />
+        </div>
+      )}
     </div>
   );
 };
 
 export default SignupLogin;
-
-// <div className="create-team box-border w-full max-w-[800px] rounded-md px-12 py-8 my-5 mx-8 bg-white font-poppins">
-//       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-//         <p className="my-2">Team title</p>
-//         <input
-//           value={team.name}
-//           onChange={changeHandler}
-//           type="text"
-//           name="name"
-//           placeholder="Type here"
-//           className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
-//         />
-//       </div>
-//       <div className="createteam-players flex gap-10">
-//         <div className="createteam-itemfield text-[#7b7b7b] w-full">
-//           <p className="my-2">No. of available players</p>
-//           <input
-//             type="text"
-//             value={team.available_players}
-//             onChange={changeHandler}
-//             name="available_players"
-//             placeholder="Type here"
-//             className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
-//           />
-//         </div>
-//         <div className="createteam-itemfield text-[#7b7b7b] w-full">
-//           <p className="my-2">No. of required players</p>
-//           <input
-//             type="text"
-//             value={team.required_players}
-//             onChange={changeHandler}
-//             name="required_players"
-//             placeholder="Type here"
-//             className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
-//           />
-//         </div>
-//       </div>
-//       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-//         <p className="my-2">Player Names (CSV)</p>
-//         <input
-//           type="text"
-//           value={team.player_names}
-//           onChange={changeHandler}
-//           name="player_names"
-//           placeholder="Type here"
-//           className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
-//         />
-//       </div>
-//       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-//         <p className="my-2">Sport Name</p>
-//         <p className="my-2 pl-4">Cricket</p>
-//       </div>
-//       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-//         <label htmlFor="file-input">
-//           <img
-//             src={upload_area}
-//             className="createteam-thumbnail-img h-28 w-28 rounded-lg my-2 object-contain"
-//           />
-//         </label>
-//         <input
-//           type="file"
-//           name="image"
-//           hidden
-//           id="file-input"
-//           className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
-//         />
-//       </div>
-//       <button
-//         className="createteam-btn  mt-5 w-40 h-10 rounded-md bg-[#6079ff] cursor-pointer text-white"
-//         onClick={() => createTeam()}
-//       >
-//         Create
-//       </button>
-//     </div>

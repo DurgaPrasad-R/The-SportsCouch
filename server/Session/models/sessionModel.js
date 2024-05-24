@@ -28,6 +28,14 @@ const sessionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    active: {
+      type: Boolean,
+      required: true,
+    },
+    cancellationReason: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
