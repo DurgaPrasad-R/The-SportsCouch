@@ -1,20 +1,64 @@
 import { useState } from "react";
 import upload_area from "../assets/upload_area.svg";
 const CreateTeam = () => {
+  const [image, setImage] = useState(false);
   const [team, setTeam] = useState({
     name: "",
-    available_players: "",
-    required_players: "",
-    player_names: "",
-    image: "",
+    available: "",
+    required: "",
+    players: "",
+    sport: "Cricket",
   });
+
+  const imageHandler = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const changeHandler = (e) => {
     setTeam({ ...team, [e.target.name]: e.target.value });
   };
 
-  const createTeam = () => {
+  const createTeam = async () => {
     console.log(team);
+    let responseData;
+    let teamDetails = team;
+    let teamData = new FormData();
+    console.log(image);
+    teamData.append("team", image);
+    await fetch("http://localhost:3001/teams/upload", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: teamData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        responseData = data;
+      });
+    if (responseData.success) {
+      console.log(responseData.image_url);
+      teamDetails.image = responseData.image_url;
+      teamDetails.players = team.players.split(",");
+      await fetch("http://localhost:3001/teams/create-team", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(teamDetails),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            alert(data.message);
+          } else {
+            alert("Failed to create team");
+          }
+        });
+    } else {
+      console.log("Failed to upload image");
+    }
   };
   return (
     <div className="create-team box-border w-full max-w-[800px] rounded-md px-12 py-8 my-5 mx-8 bg-white font-poppins">
@@ -34,9 +78,9 @@ const CreateTeam = () => {
           <p className="my-2">No. of available players</p>
           <input
             type="text"
-            value={team.available_players}
+            value={team.available}
             onChange={changeHandler}
-            name="available_players"
+            name="available"
             placeholder="Type here"
             className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
           />
@@ -45,9 +89,9 @@ const CreateTeam = () => {
           <p className="my-2">No. of required players</p>
           <input
             type="text"
-            value={team.required_players}
+            value={team.required}
             onChange={changeHandler}
-            name="required_players"
+            name="required"
             placeholder="Type here"
             className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
           />
@@ -57,9 +101,9 @@ const CreateTeam = () => {
         <p className="my-2">Player Names (CSV)</p>
         <input
           type="text"
-          value={team.player_names}
+          value={team.players}
           onChange={changeHandler}
-          name="player_names"
+          name="players"
           placeholder="Type here"
           className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
         />
@@ -71,11 +115,12 @@ const CreateTeam = () => {
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
         <label htmlFor="file-input">
           <img
-            src={upload_area}
+            src={image ? URL.createObjectURL(image) : upload_area}
             className="createteam-thumbnail-img h-28 w-28 rounded-lg my-2 object-contain"
           />
         </label>
         <input
+          onChange={imageHandler}
           type="file"
           name="image"
           hidden

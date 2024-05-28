@@ -10,7 +10,11 @@ const createTeam = async (req, res) => {
     sport,
     image,
   });
-  res.json({ message: "Team created successfully", teamId: team.id });
+  res.json({
+    message: "Team created successfully",
+    success: true,
+    teamId: team.id,
+  });
 };
 
 module.exports = { createTeam };

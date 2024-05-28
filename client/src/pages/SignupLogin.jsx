@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import WAVES from "vanta/src/vanta.waves";
 import spinner from "../assets/loading.gif";
 import { useEffect, useState } from "react";
@@ -5,10 +6,9 @@ import show from "../assets/show.png";
 import hide from "../assets/hide.png";
 import loginUser from "../services/login";
 import signUp from "../services/signup";
+import * as Yup from "yup";
+import { loginSchema, signupSchema } from "../services/validation";
 const SignupLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [passwordType, setPasswordType] = useState(true);
-
   useEffect(() => {
     WAVES({
       el: "#vanta",
@@ -22,6 +22,8 @@ const SignupLogin = () => {
     });
   }, []);
 
+  const [loading, setLoading] = useState(false);
+  const [passwordType, setPasswordType] = useState(true);
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -31,23 +33,30 @@ const SignupLogin = () => {
     email: "",
     password: "",
   });
-  const changeHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+
+  const validationSchema = state === "Login" ? loginSchema : signupSchema; // Choose schema based on login/signup state
 
   const handleSubmit = async () => {
-    setLoading(true);
     try {
+      await validationSchema.validate(formData, { abortEarly: false }); // Validate form data using Yup schema
+      setLoading(true);
       if (state === "Login") {
         await loginUser(formData);
       } else {
         await signUp(formData);
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof Yup.ValidationError) {
+        error.inner.forEach((err) => toast.error(err.message)); // Display validation errors using toast
+      } else {
+        console.log(error);
+      }
     } finally {
       setLoading(false);
     }
+  };
+  const changeHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -115,7 +124,7 @@ const SignupLogin = () => {
                 type="text"
                 name="email"
                 placeholder="Type here"
-                className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+                className="w-full h-10 box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
               />
             </div>
             <div className="mb-2">
