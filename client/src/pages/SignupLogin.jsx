@@ -2,6 +2,8 @@ import { toast } from "react-toastify";
 import WAVES from "vanta/src/vanta.waves";
 import spinner from "../assets/loading.gif";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/AuthSlice";
 import show from "../assets/show.png";
 import hide from "../assets/hide.png";
 import loginUser from "../services/login";
@@ -21,7 +23,7 @@ const SignupLogin = () => {
       shininess: 50.0,
     });
   }, []);
-
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [passwordType, setPasswordType] = useState(true);
   const [state, setState] = useState("Login");
@@ -41,9 +43,13 @@ const SignupLogin = () => {
       await validationSchema.validate(formData, { abortEarly: false }); // Validate form data using Yup schema
       setLoading(true);
       if (state === "Login") {
-        await loginUser(formData);
+        const user = await loginUser(formData);
+        dispatch(setUser(user));
+        window.location.replace("/user");
       } else {
-        await signUp(formData);
+        const user = await signUp(formData);
+        dispatch(setUser(user));
+        window.location.replace("/user");
       }
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

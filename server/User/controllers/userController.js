@@ -25,7 +25,12 @@ const userRegister = async (req, res) => {
       },
     };
     const token = jwt.sign(data, "secret_ecom");
-    res.json({ success: true, message: "User created successfully ", token });
+    res.json({
+      success: true,
+      message: "User created successfully ",
+      token,
+      user,
+    });
   }
 };
 
@@ -49,7 +54,12 @@ const userLogin = async (req, res) => {
     },
   };
   const token = jwt.sign(data, "secret_ecom");
-  res.json({ success: true, message: "User logged in successfully", token });
+  res.json({
+    success: true,
+    message: "User logged in successfully",
+    token,
+    user,
+  });
 };
 
 module.exports = { userRegister, userLogin };
