@@ -13,7 +13,6 @@ const CreateTeam = () => {
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
   };
-
   const changeHandler = (e) => {
     setTeam({ ...team, [e.target.name]: e.target.value });
   };
@@ -45,6 +44,7 @@ const CreateTeam = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token"),
         },
         body: JSON.stringify(teamDetails),
       })

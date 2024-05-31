@@ -22,8 +22,10 @@ const userRegister = async (req, res) => {
     const data = {
       user: {
         id: user.id,
+        email: user.email,
       },
     };
+    console.log(data);
     const token = jwt.sign(data, "secret_ecom");
     res.json({
       success: true,
@@ -51,6 +53,7 @@ const userLogin = async (req, res) => {
   const data = {
     user: {
       id: user.id,
+      email: user.email,
     },
   };
   const token = jwt.sign(data, "secret_ecom");

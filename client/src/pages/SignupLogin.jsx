@@ -44,8 +44,9 @@ const SignupLogin = () => {
       setLoading(true);
       if (state === "Login") {
         const user = await loginUser(formData);
+        console.log(user);
         dispatch(setUser(user));
-        window.location.replace("/user");
+        window.location.href = "/user";
       } else {
         const user = await signUp(formData);
         dispatch(setUser(user));

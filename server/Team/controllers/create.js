@@ -9,6 +9,7 @@ const createTeam = async (req, res) => {
     players,
     sport,
     image,
+    email: req.user.email,
   });
   res.json({
     message: "Team created successfully",
@@ -17,4 +18,17 @@ const createTeam = async (req, res) => {
   });
 };
 
-module.exports = { createTeam };
+const getTeams = async (req, res) => {
+  try {
+    const teams = await teamModel.find({ email: req.user.email });
+    res.json({ teams });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while retrieving the teams",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createTeam, getTeams };

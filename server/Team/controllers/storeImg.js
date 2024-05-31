@@ -4,7 +4,7 @@ const storeImg = (req, res) => {
   }
   res.json({
     success: 1,
-    image_url: `images/${req.file.filename}`,
+    image_url: "http://localhost:3001/images/" + `${req.file.filename}`,
   });
 };
 

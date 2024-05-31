@@ -3,23 +3,22 @@ import UserDashBoard from "./pages/UserDashBoard";
 import SignupLogin from "./pages/SignupLogin";
 import Options from "./pages/Options";
 import { Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store";
+
 import UserLayout from "./pages/UserLayout";
+import UserProfile from "./components/UserProfile";
 const App = () => {
   return (
-    <Provider store={store}>
-      <div className="font-poppins">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/sign-in" element={<SignupLogin />} />
-          <Route path="/user" element={<UserLayout />}>
-            <Route index element={<UserDashBoard />} />
-            <Route path="options/*" element={<Options />} />
-          </Route>
-        </Routes>
-      </div>
-    </Provider>
+    <div className="font-poppins">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/sign-in" element={<SignupLogin />} />
+        <Route path="/user" element={<UserLayout />}>
+          <Route index element={<UserDashBoard />} />
+          <Route path="options/*" element={<Options />} />
+        </Route>
+        <Route path="/profile" element={<UserProfile />} />
+      </Routes>
+    </div>
   );
 };
 

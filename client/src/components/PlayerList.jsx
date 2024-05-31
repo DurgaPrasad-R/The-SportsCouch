@@ -1,6 +1,6 @@
 import icon from "../assets/squad.png";
 import PropTypes from "prop-types";
-const PlayerList = ({ players, roles }) => {
+const PlayerList = ({ players }) => {
   return (
     <div className="mt-5">
       <h3 className="font-bold">Players</h3>
@@ -13,7 +13,6 @@ const PlayerList = ({ players, roles }) => {
             <img src={icon} alt="player icon" className="w-10 h-10 mr-3" />
             <div>
               <h3>{player}</h3>
-              <p className="text-gray-500">{roles[index]}</p>
             </div>
           </div>
         ))}

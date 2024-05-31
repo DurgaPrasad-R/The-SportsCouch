@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   isAuthenticated: false,
+  theme: "light",
 };
 
 const AuthSlice = createSlice({
@@ -17,8 +18,11 @@ const AuthSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
     },
+    toggleTheme(state) {
+      state.theme = state.theme === "light" ? "dark" : "light";
+    },
   },
 });
 
-export const { setUser, removeUser } = AuthSlice.actions;
+export const { setUser, removeUser, toggleTheme } = AuthSlice.actions;
 export default AuthSlice.reducer;

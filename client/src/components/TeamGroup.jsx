@@ -1,6 +1,7 @@
 import PlayerList from "./PlayerList";
 import PropTypes from "prop-types";
 const TeamGroup = ({ data }) => {
+  console.log(data);
   return (
     <div className="mb-10">
       <div className="flex items-center justify-between px-5 py-3 bg-[#f6f6f6] rounded-lg shadow-md">
