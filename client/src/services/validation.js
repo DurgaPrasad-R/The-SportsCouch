@@ -23,3 +23,14 @@ export const signupSchema = Yup.object().shape({
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
 });
+
+export const createTeamSchema = Yup.object().shape({
+  name: Yup.string().required("Team name is required"),
+  available: Yup.number()
+    .required("Number of available players is required")
+    .positive("Number of available players must be a positive number"),
+  required: Yup.number()
+    .required("Number of required players is required")
+    .positive("Number of required players must be a positive number"),
+  players: Yup.string().required("Player names are required"),
+});

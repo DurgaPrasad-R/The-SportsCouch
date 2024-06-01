@@ -30,11 +30,11 @@ const sessionSchema = mongoose.Schema(
     },
     active: {
       type: Boolean,
-      required: true,
+      default: "active", // cancelled
     },
     cancellationReason: {
       type: String,
-      required: false,
+      default: "", // some reason
     },
   },
   {

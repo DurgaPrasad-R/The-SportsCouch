@@ -1,5 +1,6 @@
 import { useState } from "react";
 import upload_area from "../assets/upload_area.svg";
+import { toast } from "react-toastify";
 const CreateTeam = () => {
   const [image, setImage] = useState(false);
   const [team, setTeam] = useState({
@@ -24,40 +25,46 @@ const CreateTeam = () => {
     let teamData = new FormData();
     console.log(image);
     teamData.append("team", image);
-    await fetch("http://localhost:3001/teams/upload", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: teamData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        responseData = data;
-      });
-    if (responseData.success) {
-      console.log(responseData.image_url);
-      teamDetails.image = responseData.image_url;
-      teamDetails.players = team.players.split(",");
-      await fetch("http://localhost:3001/teams/create-team", {
+    if (localStorage.getItem("auth-token")) {
+      await fetch("http://localhost:3001/teams/upload", {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
           "auth-token": localStorage.getItem("auth-token"),
         },
-        body: JSON.stringify(teamDetails),
+        body: teamData,
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.success) {
-            alert(data.message);
-          } else {
-            alert("Failed to create team");
-          }
+          responseData = data;
         });
+      if (responseData.success) {
+        console.log(responseData.image_url);
+        teamDetails.image = responseData.image_url;
+        teamDetails.players = team.players.split(",");
+        await fetch("http://localhost:3001/teams/create-team", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          body: JSON.stringify(teamDetails),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              toast.success(data.message);
+            } else {
+              toast.error("Failed to create team");
+            }
+          });
+      } else {
+        toast.error("Failed while uploading an image");
+      }
     } else {
-      console.log("Failed to upload image");
+      toast.error("Please login to create team");
+      window.location.href = "/sign-in";
     }
   };
   return (

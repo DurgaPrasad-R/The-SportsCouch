@@ -36,11 +36,11 @@ const SignupLogin = () => {
     password: "",
   });
 
-  const validationSchema = state === "Login" ? loginSchema : signupSchema; // Choose schema based on login/signup state
+  const validationSchema = state === "Login" ? loginSchema : signupSchema;
 
   const handleSubmit = async () => {
     try {
-      await validationSchema.validate(formData, { abortEarly: false }); // Validate form data using Yup schema
+      await validationSchema.validate(formData, { abortEarly: false });
       setLoading(true);
       if (state === "Login") {
         const user = await loginUser(formData);
@@ -54,7 +54,7 @@ const SignupLogin = () => {
       }
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
-        error.inner.forEach((err) => toast.error(err.message)); // Display validation errors using toast
+        error.inner.forEach((err) => toast.error(err.message));
       } else {
         console.log(error);
       }

@@ -7,7 +7,7 @@ const { storeImg } = require("../controllers/storeImg");
 const { multerMiddleware } = require("../middleware/multer");
 router.route("/").get(check);
 router.route("/create-team").post(fetchUser, createTeam);
-router.route("/upload").post(multerMiddleware, storeImg);
+router.route("/upload").post(fetchUser, multerMiddleware, storeImg);
 router.route("/get-teams").get(fetchUser, getTeams);
 
 module.exports = router;

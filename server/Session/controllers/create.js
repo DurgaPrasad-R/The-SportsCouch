@@ -9,6 +9,7 @@ const createSession = async (req, res) => {
     venue,
     sport,
     team,
+    
   });
   res.json({ message: "Session created successfully", sessionId: session.id });
 };

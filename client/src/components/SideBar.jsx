@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import create from "../assets/create.png";
 import view from "../assets/view.png";
 import join from "../assets/join-team.png";
+
 const SideBar = () => {
   return (
     <div className="side-bar flex flex-col gap-5 w-full max-w-72 h-screen bg-white pt-7 my-1">
