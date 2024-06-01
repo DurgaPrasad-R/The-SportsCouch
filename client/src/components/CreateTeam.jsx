@@ -3,13 +3,14 @@ import upload_area from "../assets/upload_area.svg";
 import { toast } from "react-toastify";
 const CreateTeam = () => {
   const [image, setImage] = useState(false);
-  const [team, setTeam] = useState({
+  const initialState = {
     name: "",
     available: "",
     required: "",
     players: "",
     sport: "Cricket",
-  });
+  };
+  const [team, setTeam] = useState(initialState);
 
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
@@ -55,6 +56,7 @@ const CreateTeam = () => {
           .then((data) => {
             if (data.success) {
               toast.success(data.message);
+              setTeam(initialState);
             } else {
               toast.error("Failed to create team");
             }

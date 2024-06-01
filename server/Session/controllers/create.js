@@ -9,9 +9,19 @@ const createSession = async (req, res) => {
     venue,
     sport,
     team,
-    
+    email: req.user.email,
   });
   res.json({ message: "Session created successfully", sessionId: session.id });
 };
 
-module.exports = { createSession };
+const getSessionsUser = async (req, res) => {
+  const sessions = await sessionModel.find({ email: req.user.email });
+  res.json({ sessions });
+};
+
+const getOtherSessions = async (req, res) => {
+  const sessions = await sessionModel.find({ email: { $ne: req.user.email } });
+  res.json({ sessions });
+};
+
+module.exports = { createSession, getSessionsUser, getOtherSessions };

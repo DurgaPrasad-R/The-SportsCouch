@@ -1,29 +1,45 @@
+import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 import cancel from "../assets/cancel.png";
 import join from "../assets/Join.png";
+
 const SessionCard = ({ created }) => {
-  const sessionData = [
-    {
-      name: "Morning Football Match",
-      sport: "Football",
-      date: "2024-05-20",
-      time: "08:00",
-      venue: "Central Park Stadium",
-    },
-    {
-      name: "Morning Football Match",
-      sport: "Football",
-      date: "2024-05-20",
-      time: "08:00",
-      venue: "Central Park Stadium",
-    },
-    {
-      name: "Morning Football Match",
-      sport: "Football",
-      date: "2024-05-20",
-      time: "08:00",
-      venue: "Central Park Stadium",
-    },
-  ];
+  const [sessionData, setSessionData] = useState([]);
+
+  useEffect(() => {
+    const getSessions = async () => {
+      if (localStorage.getItem("auth-token")) {
+        try {
+          const endpoint = created
+            ? "http://localhost:3002/sessions/get-sessions"
+            : "http://localhost:3002/sessions/get-other-sessions";
+          const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          });
+          const jsonData = await response.json();
+          console.log(
+            `Fetched ${created ? "created" : "other"} sessions`,
+            jsonData.sessions
+          );
+          setSessionData(jsonData.sessions);
+        } catch (error) {
+          console.error("Error fetching sessions:", error);
+          toast.error("Failed to fetch sessions. Please try again.");
+        }
+      } else {
+        toast.error("Please login to view sessions");
+        setTimeout(() => {
+          window.location.href = "/sign-in";
+        }, 2000);
+      }
+    };
+
+    getSessions();
+  }, [created]);
 
   const handleJoinSession = (session) => {
     console.log("Cancelling session:", session);
@@ -45,6 +61,9 @@ const SessionCard = ({ created }) => {
           </p>
           <p>
             <span className="font-semibold">Location:</span> {session.venue}
+          </p>
+          <p>
+            <span className="font-semibold">Team:</span> {session.team}
           </p>
           <button className="mt-2" onClick={() => handleJoinSession(session)}>
             {created ? (

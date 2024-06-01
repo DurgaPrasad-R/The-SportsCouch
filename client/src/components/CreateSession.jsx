@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 const CreateSession = () => {
-  const [session, setSession] = useState({
+  const initialState = {
     name: "",
     time: "",
     date: "",
     venue: "",
-    team: "",
-  });
+    team: "Team-1",
+    sport: "Cricket",
+  };
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getTeams = async () => {
+      if (localStorage.getItem("auth-token")) {
+        const response = await fetch("http://localhost:3001/teams/get-teams", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        });
+        const jsonData = await response.json();
+        // console.log(jsonData.teams);
+
+        setData(jsonData.teams);
+      } else {
+        toast.error("Please login to view teams");
+        setTimeout(() => {
+          window.location.href = "/sign-in";
+        }, 2000);
+      }
+    };
+    getTeams();
+  }, []);
+  const [session, setSession] = useState(initialState);
 
   const changeHandler = (e) => {
     setSession({ ...session, [e.target.name]: e.target.value });
@@ -14,6 +41,27 @@ const CreateSession = () => {
 
   const createSession = () => {
     console.log(session);
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:3002/sessions/create-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+        body: JSON.stringify(session),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          toast.success(data.message);
+          setSession(initialState);
+        });
+    } else {
+      toast.error("Please login to create a session");
+      setTimeout(() => {
+        window.location.href = "/sign-in";
+      }, 2000);
+    }
   };
   return (
     <div className="create-session box-border w-full max-w-[800px] rounded-md px-12 py-8 my-5 mx-8 bg-white font-poppins">
@@ -75,9 +123,11 @@ const CreateSession = () => {
           onChange={changeHandler}
           className="createsession-selector p-2 max-w-96 h-10 text-md text-[#7b7b7b] border-[1px] border-[#c3c3c3] rounded-md outline-none text-ellipsis overflow-hidden"
         >
-          <option value="Team-1">Team-1</option>
-          <option value="Team-2">Team-2</option>
-          <option value="Team-3">Team-3</option>
+          {data.map((team, index) => (
+            <option value={team.name} key={index}>
+              {team.name}
+            </option>
+          ))}
         </select>
       </div>
       <button

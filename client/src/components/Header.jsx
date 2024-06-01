@@ -3,10 +3,11 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import navProfile from "../assets/nav-profile.svg";
 import navLogo from "../assets/nav-logo.png";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "../store/AuthSlice";
 
 const Header = () => {
+  const user = useSelector((state) => state.auth.user);
   const [theme, setTheme] = useState("light");
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -61,11 +62,9 @@ const Header = () => {
             <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg">
               <div className="p-4">
                 <p className="text-gray-900 dark:text-gray-100 font-bold">
-                  {userDetails.name}
+                  {user.firstName + " " + user.lastName}
                 </p>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {userDetails.email}
-                </p>
+                <p className="text-gray-700 dark:text-gray-300">{user.email}</p>
               </div>
               <div className="p-2 border-t border-gray-300 dark:border-gray-700">
                 <button
