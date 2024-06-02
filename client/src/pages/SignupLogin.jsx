@@ -46,11 +46,15 @@ const SignupLogin = () => {
         const user = await loginUser(formData);
         console.log(user);
         dispatch(setUser(user));
-        window.location.href = "/user";
+        setTimeout(() => {
+          window.location.href = "/user";
+        }, 2000);
       } else {
         const user = await signUp(formData);
         dispatch(setUser(user));
-        window.location.replace("/user");
+        setTimeout(() => {
+          window.location.href = "/user";
+        }, 2000);
       }
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

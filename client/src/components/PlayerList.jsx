@@ -23,7 +23,7 @@ const PlayerList = ({ players }) => {
 
 PlayerList.propTypes = {
   players: PropTypes.arrayOf(PropTypes.string).isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // roles: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default PlayerList;

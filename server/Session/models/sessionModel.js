@@ -1,6 +1,5 @@
-const { time } = require("console");
 const mongoose = require("mongoose");
-const { type } = require("os");
+const { v4: uuidv4 } = require("uuid");
 
 const sessionSchema = mongoose.Schema(
   {
@@ -28,6 +27,10 @@ const sessionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    teamName: {
+      type: String,
+      required: true,
+    },
     active: {
       type: Boolean,
       default: true, // cancelled - false
@@ -39,6 +42,15 @@ const sessionSchema = mongoose.Schema(
     email: {
       type: String,
       required: true,
+    },
+    sessionId: {
+      type: String,
+      unique: true,
+      default: () => `session_${uuidv4()}`, // Generates a unique identifier
+    },
+    participants: {
+      type: [String], // Array of strings to store email addresses
+      default: [],
     },
   },
   {

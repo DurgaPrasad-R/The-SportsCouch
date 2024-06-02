@@ -6,9 +6,11 @@ const CreateSession = () => {
     time: "",
     date: "",
     venue: "",
-    team: "Team-1",
+    team: "",
+    teamName: "",
     sport: "Cricket",
   };
+  const [session, setSession] = useState(initialState);
   const [data, setData] = useState([]);
   useEffect(() => {
     const getTeams = async () => {
@@ -21,8 +23,10 @@ const CreateSession = () => {
           },
         });
         const jsonData = await response.json();
+        setSession({
+          ...session,
+        });
         // console.log(jsonData.teams);
-
         setData(jsonData.teams);
       } else {
         toast.error("Please login to view teams");
@@ -33,22 +37,44 @@ const CreateSession = () => {
     };
     getTeams();
   }, []);
-  const [session, setSession] = useState(initialState);
 
   const changeHandler = (e) => {
     setSession({ ...session, [e.target.name]: e.target.value });
   };
 
+  const teamChangeHandler = (e) => {
+    console.log(e.target.value);
+    const selectedTeam = data.find((team) => team._id === e.target.value);
+    // console.log(selectedTeam);
+    setSession({
+      ...session,
+      team: selectedTeam._id,
+      teamName: selectedTeam.name,
+    });
+    // console.log(selectedTeam._id + " " + selectedTeam.name);
+    document.getElementById("teamId").value = selectedTeam._id;
+    document.getElementById("teamName").value = selectedTeam.name;
+  };
+
   const createSession = () => {
     console.log(session);
+    if (!document.getElementById("teamId").value) {
+      toast.error("Please select a team.");
+      return;
+    }
     if (localStorage.getItem("auth-token")) {
+      const sessionData = {
+        ...session,
+        team: document.getElementById("teamId").value,
+        teamName: document.getElementById("teamName").value,
+      };
       fetch("http://localhost:3002/sessions/create-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("auth-token"),
         },
-        body: JSON.stringify(session),
+        body: JSON.stringify(sessionData),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -65,6 +91,8 @@ const CreateSession = () => {
   };
   return (
     <div className="create-session box-border w-full max-w-[800px] rounded-md px-12 py-8 my-5 mx-8 bg-white font-poppins">
+      <input type="hidden" id="teamId" />
+      <input type="hidden" id="teamName" />
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
         <p className="my-2">Session title</p>
         <input
@@ -119,12 +147,11 @@ const CreateSession = () => {
         <p className="my-2">Select Your Team</p>
         <select
           name="team"
-          value={session.team}
-          onChange={changeHandler}
+          onChange={teamChangeHandler}
           className="createsession-selector p-2 max-w-96 h-10 text-md text-[#7b7b7b] border-[1px] border-[#c3c3c3] rounded-md outline-none text-ellipsis overflow-hidden"
         >
           {data.map((team, index) => (
-            <option value={team.name} key={index}>
+            <option value={team._id} key={index}>
               {team.name}
             </option>
           ))}

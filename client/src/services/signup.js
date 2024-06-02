@@ -4,7 +4,7 @@ const signIn = async (formData) => {
     console.log(formData);
     let responseData;
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    await fetch(apiUrl + "/users/signup", {
+    await fetch("http://localhost:3000/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

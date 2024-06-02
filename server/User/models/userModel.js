@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema(
   {
     email: {
       type: String,
+      unique: true,
       required: true,
     },
 
@@ -29,6 +30,12 @@ const userSchema = mongoose.Schema(
 
     phone: {
       type: String,
+      required: true,
+    },
+
+    sessions: {
+      type: Array,
+      default: [],
       required: true,
     },
   },
