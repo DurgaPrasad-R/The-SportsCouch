@@ -28,9 +28,11 @@ const Squad = () => {
   }, []);
   return (
     <div className="m-10 flex flex-wrap justify-evenly w-full gap-5 font-poppins">
-      {data.map((teamData, index) => (
-        <TeamGroup key={index} data={teamData} />
-      ))}
+      {data.length === 0 ? (
+        <p>No Teams to show</p>
+      ) : (
+        data.map((teamData, index) => <TeamGroup key={index} data={teamData} />)
+      )}
     </div>
   );
 };

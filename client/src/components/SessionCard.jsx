@@ -140,50 +140,55 @@ const SessionCard = ({ created }) => {
   }
 
   return (
-    <div className="m-10 flex flex-wrap justify-center gap-5 font-poppins">
-      {sessionData.map((session) => (
-        <div key={session.sessionId} className="shadow-md p-4 w-fit h-fit">
-          <h3 className="text-lg font-semibold mb-2">{session.name}</h3>
-          <p>
-            <span className="font-semibold">Sport:</span> {session.sport}
-          </p>
-          <p>
-            <span className="font-semibold">Date:</span> {session.date}
-          </p>
-          <p>
-            <span className="font-semibold">Time:</span> {session.time}
-          </p>
-          <p>
-            <span className="font-semibold">Location:</span> {session.venue}
-          </p>
-          <p>
-            <span className="font-semibold">Team:</span> {session.teamName}
-          </p>
-          {!session.active && (
+    <div className="m-10 flex flex-wrap w-full justify-center gap-5 font-poppins">
+      {sessionData.length === 0 ? (
+        <p>No Sessions to show</p>
+      ) : (
+        sessionData.map((session) => (
+          <div key={session.sessionId} className="shadow-md p-4 w-fit h-fit">
+            <h3 className="text-lg font-semibold mb-2">{session.name}</h3>
             <p>
-              <span className="font-semibold">Cancellation Reason:</span>{" "}
-              {session.cancellationReason}
+              <span className="font-semibold">Sport:</span> {session.sport}
             </p>
-          )}
-          {session.active &&
-            !(session.participants.length > 0) &&
-            !session.participants.includes(user.email) && (
-              <button
-                className="mt-2"
-                onClick={() => handleJoinSession(session)}
-                disabled={buttonLoading === session.sessionId}
-              >
-                {buttonLoading === session._id ? (
-                  "Processing..."
-                ) : created ? (
-                  <img src={cancel} alt="Cancel" className="w-10" />
-                ) : (
-                  <img src={join} alt="Join" className="w-10" />
-                )}
-              </button>
+            <p>
+              <span className="font-semibold">Date:</span> {session.date}
+            </p>
+            <p>
+              <span className="font-semibold">Time:</span> {session.time}
+            </p>
+            <p>
+              <span className="font-semibold">Location:</span> {session.venue}
+            </p>
+            <p>
+              <span className="font-semibold">Team:</span> {session.teamName}
+            </p>
+            {!session.active && (
+              <p>
+                <span className="font-semibold">Cancellation Reason:</span>{" "}
+                {session.cancellationReason}
+              </p>
             )}
-        </div>
-      ))}
+            {session.active &&
+              !(session.participants.length > 0) &&
+              !session.participants.includes(user.email) && (
+                <button
+                  className="mt-2"
+                  onClick={() => handleJoinSession(session)}
+                  disabled={buttonLoading === session.sessionId}
+                >
+                  {buttonLoading === session._id ? (
+                    "Processing..."
+                  ) : created ? (
+                    <img src={cancel} alt="Cancel" className="w-10" />
+                  ) : (
+                    <img src={join} alt="Join" className="w-10" />
+                  )}
+                </button>
+              )}
+            {session.participants.includes(user.email) && <p>Joined</p>}
+          </div>
+        ))
+      )}
 
       {showModal && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
