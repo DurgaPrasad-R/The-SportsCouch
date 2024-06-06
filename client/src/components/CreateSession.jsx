@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-const CreateSession = () => {
+import PropTypes from "prop-types";
+
+const CreateSession = ({ sportName }) => {
+  console.log(sportName);
   const initialState = {
     name: "",
     time: "",
@@ -8,7 +11,7 @@ const CreateSession = () => {
     venue: "",
     team: "",
     teamName: "",
-    sport: "Cricket",
+    sport: sportName,
   };
   const [session, setSession] = useState(initialState);
   const [data, setData] = useState([]);
@@ -141,7 +144,7 @@ const CreateSession = () => {
       </div>
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
         <p className="my-2">Sport Name</p>
-        <p className="my-2 pl-4">Cricket</p>
+        <p className="my-2 pl-4">{sportName}</p>
       </div>
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
         <p className="my-2">Select Your Team</p>
@@ -167,4 +170,7 @@ const CreateSession = () => {
   );
 };
 
+CreateSession.propTypes = {
+  sportName: PropTypes.string.isRequired,
+};
 export default CreateSession;

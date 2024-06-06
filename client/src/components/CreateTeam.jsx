@@ -1,14 +1,15 @@
 import { useState } from "react";
 import upload_area from "../assets/upload_area.svg";
 import { toast } from "react-toastify";
-const CreateTeam = () => {
+import PropTypes from "prop-types";
+const CreateTeam = ({ sportName }) => {
   const [image, setImage] = useState(false);
   const initialState = {
     name: "",
     available: "",
     required: "",
     players: "",
-    sport: "Cricket",
+    sport: sportName,
   };
   const [team, setTeam] = useState(initialState);
 
@@ -119,7 +120,7 @@ const CreateTeam = () => {
       </div>
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
         <p className="my-2">Sport Name</p>
-        <p className="my-2 pl-4">Cricket</p>
+        <p className="my-2 pl-4">{sportName}</p>
       </div>
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
         <label htmlFor="file-input">
@@ -145,5 +146,9 @@ const CreateTeam = () => {
       </button>
     </div>
   );
+};
+
+CreateTeam.propTypes = {
+  sportName: PropTypes.string.isRequired,
 };
 export default CreateTeam;
