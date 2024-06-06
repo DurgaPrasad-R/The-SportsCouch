@@ -6,7 +6,6 @@ import Squad from "../components/Squad";
 import SessionCard from "../components/SessionCard";
 const Options = () => {
   const { sportName } = useParams();
-  console.log(sportName);
   return (
     <div className="flex">
       <SideBar sportName={sportName} />

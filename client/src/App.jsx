@@ -3,7 +3,8 @@ import UserDashBoard from "./pages/UserDashBoard";
 import SignupLogin from "./pages/SignupLogin";
 import Options from "./pages/Options";
 import { Routes, Route } from "react-router-dom";
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorPage from "./components/ErrorPage";
 import UserLayout from "./pages/UserLayout";
 import UserProfile from "./components/UserProfile";
 const App = () => {
@@ -12,11 +13,19 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/sign-in" element={<SignupLogin />} />
-        <Route path="/user" element={<UserLayout />}>
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <UserLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<UserDashBoard />} />
           <Route path="/user/options/:sportName/*" element={<Options />} />
         </Route>
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );
