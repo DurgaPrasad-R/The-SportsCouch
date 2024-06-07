@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 const UserProfile = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.util.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <div>

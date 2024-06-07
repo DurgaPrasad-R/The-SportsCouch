@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const UserLayout = () => {
   return (
-    <div>
+    <div className="dark:bg-[#041F1E] dark:text-white ">
       <Header />
       <Outlet />
       <Footer />

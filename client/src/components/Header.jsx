@@ -45,19 +45,19 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-4 shadow-md dark:bg-[#041F1E] dark:shadow-slate-100 dark:shadow-sm relative">
+    <div className="flex items-center justify-between px-4 shadow-md dark:bg-black dark:shadow-[#444444] dark:shadow-sm relative">
       <Link to="/user">
         <img src={navLogo} alt="logo" className="nav-logo w-20" />
       </Link>
       <div className="flex items-center gap-5">
         {theme === "dark" ? (
           <MdLightMode
-            className="text-white text-2xl cursor-pointer"
+            className="text-white text-2xl cursor-pointer hidden md:block"
             onClick={handleTheme}
           />
         ) : (
           <MdDarkMode
-            className="text-2xl cursor-pointer"
+            className="text-2xl cursor-pointer hidden md:block"
             onClick={handleTheme}
           />
         )}
@@ -75,6 +75,25 @@ const Header = () => {
                   {user.firstName + " " + user.lastName}
                 </p>
                 <p className="text-gray-700 dark:text-gray-300">{user.email}</p>
+              </div>
+              <div className="p-2 border-t border-gray-300 dark:border-gray-700 md:hidden">
+                {theme === "dark" ? (
+                  <div className="flex w-full text-left px-4 py-2 text-gray-900 dark:text-gray-100 gap-2">
+                    Light
+                    <MdLightMode
+                      className="text-white text-2xl cursor-pointer"
+                      onClick={handleTheme}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex w-full text-left px-4 py-2 text-gray-900 dark:text-gray-100 gap-2">
+                    Dark
+                    <MdDarkMode
+                      className="text-2xl cursor-pointer"
+                      onClick={handleTheme}
+                    />
+                  </div>
+                )}
               </div>
               <div className="p-2 border-t border-gray-300 dark:border-gray-700">
                 <button

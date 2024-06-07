@@ -1,3 +1,4 @@
+import { PropTypes } from "prop-types";
 const PlayedCard = ({ image, teamName, status }) => {
   return (
     <div className="teamContainer">
@@ -19,3 +20,8 @@ const PlayedCard = ({ image, teamName, status }) => {
 };
 
 export default PlayedCard;
+PlayedCard.propTypes = {
+  image: PropTypes.string,
+  teamName: PropTypes.string,
+  status: PropTypes.string,
+};

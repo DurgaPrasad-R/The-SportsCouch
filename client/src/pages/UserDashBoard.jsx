@@ -3,7 +3,7 @@ import RecentlyPlayed from "../components/RecentlyPlayed";
 import SportsBanner from "../components/SportsBanner";
 const UserDashBoard = () => {
   return (
-    <div>
+    <div className="dark:bg-[#041F1E] dark:text-white ">
       <SportsBanner />
       <Challenge />
       <RecentlyPlayed />

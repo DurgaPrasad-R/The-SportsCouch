@@ -7,7 +7,7 @@ const Review = () => {
       <h1 className="title font-bold text-2xl flex justify-center p-4">
         Reviews
       </h1>
-      <div className="flex mx-4">
+      <div className="flex flex-wrap lg:flex-nowrap mx-4">
         {userReviews.data.reviews.map((review) => (
           <div key={review.id} className="review rounded-md p-4 m-4 shadow-md">
             <div className="review__user flex flex-col justify-center items-center">

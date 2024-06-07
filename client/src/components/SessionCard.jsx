@@ -14,7 +14,7 @@ const SessionCard = ({ created }) => {
   const [reason, setReason] = useState("");
   const [joined, setJoined] = useState(false);
   const [selectedSession, setSelectedSession] = useState(null);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.util.auth.user);
   useEffect(() => {
     const getSessions = async () => {
       if (localStorage.getItem("auth-token")) {

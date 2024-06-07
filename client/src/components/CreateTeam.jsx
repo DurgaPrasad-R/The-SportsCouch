@@ -71,56 +71,56 @@ const CreateTeam = ({ sportName }) => {
     }
   };
   return (
-    <div className="create-team box-border w-full max-w-[800px] rounded-md px-12 py-8 my-5 mx-8 bg-white font-poppins">
+    <div className="create-team dark:bg-gray-700 p-5 box-border w-full md:max-w-[800px] rounded-md md:px-12 md:py-8 md:my-5 md:mx-8 bg-white font-poppins">
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Team title</p>
+        <p className="my-2 dark:text-white">Team title</p>
         <input
           value={team.name}
           onChange={changeHandler}
           type="text"
           name="name"
           placeholder="Type here"
-          className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+          className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b] dark:bg-transparent dark:text-white"
         />
       </div>
-      <div className="createteam-players flex gap-10">
+      <div className="createteam-players md:flex gap-10">
         <div className="createteam-itemfield text-[#7b7b7b] w-full">
-          <p className="my-2">No. of available players</p>
+          <p className="my-2 dark:text-white">No. of available players</p>
           <input
             type="text"
             value={team.available}
             onChange={changeHandler}
             name="available"
             placeholder="Type here"
-            className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+            className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b] dark:bg-transparent dark:text-white"
           />
         </div>
         <div className="createteam-itemfield text-[#7b7b7b] w-full">
-          <p className="my-2">No. of required players</p>
+          <p className="my-2 dark:text-white">No. of required players</p>
           <input
             type="text"
             value={team.required}
             onChange={changeHandler}
             name="required"
             placeholder="Type here"
-            className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+            className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b] dark:bg-transparent dark:text-white"
           />
         </div>
       </div>
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Player Names (CSV)</p>
+        <p className="my-2 dark:text-white">Player Names (CSV)</p>
         <input
           type="text"
           value={team.players}
           onChange={changeHandler}
           name="players"
           placeholder="Type here"
-          className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+          className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b] dark:bg-transparent dark:text-white"
         />
       </div>
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Sport Name</p>
-        <p className="my-2 pl-4">{sportName}</p>
+        <p className="my-2 dark:text-white">Sport Name</p>
+        <p className="my-2 pl-4 dark:text-white">{sportName}</p>
       </div>
       <div className="createteam-itemfield text-[#7b7b7b] w-full">
         <label htmlFor="file-input">

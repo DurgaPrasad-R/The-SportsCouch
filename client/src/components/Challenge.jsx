@@ -5,10 +5,10 @@ const Challenge = () => {
   const teamName = "TheBoys";
   return (
     <div className="challenge mx-10">
-      <h1 className="title font-bold text-2xl flex justify-center p-4">
+      <h1 className="title font-bold md:text-2xl text-xl flex justify-center p-4">
         Challenge a Team
       </h1>
-      <div className="flex gap-10 justify-center">
+      <div className="flex md:flex-nowrap flex-wrap gap-10 justify-center">
         <TeamCard teamName={teamName} sportName={sportName} image={image} />
         <TeamCard teamName={teamName} sportName={sportName} image={image} />
         <TeamCard teamName={teamName} sportName={sportName} image={image} />

@@ -1,11 +1,12 @@
 import navLogo from "../assets/nav-logo.png";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <>
-      <div className="px-10 flex justify-around items-center">
+    <div className="dark:bg-[#041F1E] dark:text-white ">
+      <div className="px-10 flex flex-wrap justify-around items-center">
         <div>
-          <div className="navLinks flex gap-10">
-            <div className="firstSec flex flex-col items-start p-4">
+          <div className="navLinks flex flex-wrap gap-10">
+            <div className="firstSec md:flex flex-col items-start p-4 hidden">
               <h1 className="text-lg font-semibold">Product</h1>
               <p className="text-md">Updates</p>
               <p className="text-md">Security</p>
@@ -17,13 +18,13 @@ const Footer = () => {
               <p className="text-md">Blog</p>
               <p className="text-md">Join us</p>
             </div>
-            <div className="thirdSec flex flex-col items-start p-4">
+            <div className="thirdSec md:flex flex-col items-start p-4 hidden">
               <h1 className="text-lg font-semibold">Industries</h1>
               <p className="text-md">Startup</p>
               <p className="text-md">Venture Capital</p>
               <p className="text-md">Careers</p>
             </div>
-            <div className="fourthSec flex flex-col items-start p-4">
+            <div className="fourthSec md:flex flex-col items-start p-4 hidden">
               <h1 className="text-lg font-semibold">Help</h1>
               <p className="text-md">Talk to Support</p>
               <p className="text-md">Support Docs</p>
@@ -31,9 +32,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/3 flex flex-col gap-4 p-4">
-          <img src={navLogo} alt="logo" className="nav-logo w-24" />
-          <p>
+        <div className="w-1/3 md:flex flex-col gap-4 p-4">
+          <img src={navLogo} alt="logo" className="nav-logo w-20" />
+          <p className="hidden md:flex">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -44,15 +45,20 @@ const Footer = () => {
         </div>
       </div>
       <hr className="mx-10 my-4" />
-      <div className="mx-10 flex justify-around my-2">
+      <div className="md:mx-10 flex flex-wrap justify-around md:py-2">
         <div className="flex gap-4">
           <p>Privacy</p>
           <p>Services</p>
-          <p>Terms & Conditions</p>
+          <p className="hidden md:block">Terms & Conditions</p>
+          <p className="block md:hidden">T & C</p>
         </div>
-        <div>Copyright &copy; 2024 DurgaPrasad-R. All rights reserved.</div>
+        <div className="whitespace-nowrap">
+          Copyright &copy; 2024{" "}
+          <Link to="https://github.com/DurgaPrasad-R">DurgaPrasad-R.</Link>
+        </div>
+        <div>All rights reserved.</div>
       </div>
-    </>
+    </div>
   );
 };
 

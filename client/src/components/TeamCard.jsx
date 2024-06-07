@@ -1,3 +1,4 @@
+import { PropTypes } from "prop-types";
 const TeamCard = ({ image, teamName, sportName }) => {
   return (
     <div className="teamContainer">
@@ -13,3 +14,8 @@ const TeamCard = ({ image, teamName, sportName }) => {
 };
 
 export default TeamCard;
+TeamCard.propTypes = {
+  image: PropTypes.string,
+  teamName: PropTypes.string,
+  sportName: PropTypes.string,
+};
