@@ -72,7 +72,7 @@ const SignupLogin = () => {
 
   return (
     <div className="contain flex">
-      <div className="bg h-screen w-1/2 relative">
+      <div className="bg h-screen w-1/2 relative hidden md:block">
         <div className="z-10 relative text-white text-3xl font-bold flex flex-col justify-center items-center h-full">
           <p className="text-5xl mb-2">
             <span className="text-[#1e2b3a]">T</span>he{" "}
@@ -89,7 +89,7 @@ const SignupLogin = () => {
           className="h-full w-full absolute top-0 left-0 z-0"
         ></div>
       </div>
-      <div className="w-1/2 flex justify-center items-center h-screen">
+      <div className="md:w-1/2 flex justify-center items-center h-screen w-full p-3 md:p-0">
         <div className="w-96">
           <h1 className="text-4xl font-extrabold text-[#7b7b7b] text-center mb-8">
             {state}
