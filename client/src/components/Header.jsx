@@ -5,12 +5,16 @@ import navLogo from "../assets/nav-logo.png";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "../store/AuthSlice";
-
+import { toggleTheme } from "../store/themeSlice";
+import { jwtDecode } from "jwt-decode";
 const Header = () => {
-  const user = useSelector((state) => state.auth.user);
-  const [theme, setTheme] = useState("light");
-  const [showDropdown, setShowDropdown] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.util.auth.user);
+  const theme = useSelector((state) => state.util.theme.theme);
+  console.log(theme);
 
+  const [showDropdown, setShowDropdown] = useState(false);
+  const token = localStorage.getItem("auth-token");
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -19,18 +23,29 @@ const Header = () => {
     }
   }, [theme]);
 
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+      console.log(decodedToken.exp * 1000);
+      console.log(Date.now());
+
+      if (isTokenExpired) {
+        dispatch(removeUser());
+      }
+    }
+  }, [token, dispatch]);
+
   const handleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    dispatch(toggleTheme());
   };
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const dispatch = useDispatch();
-
   return (
-    <div className="flex items-center justify-between px-4 shadow-md dark:bg-black relative">
+    <div className="flex items-center justify-between px-4 shadow-md dark:bg-[#041F1E] dark:shadow-slate-100 dark:shadow-sm relative">
       <Link to="/user">
         <img src={navLogo} alt="logo" className="nav-logo w-20" />
       </Link>

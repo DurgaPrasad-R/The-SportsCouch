@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 const initialState = {
   user: null,
   isAuthenticated: false,
-  theme: "light",
 };
 
 const AuthSlice = createSlice({
@@ -23,11 +22,8 @@ const AuthSlice = createSlice({
         window.location.replace("/");
       }, 2000);
     },
-    toggleTheme(state) {
-      state.theme = state.theme === "light" ? "dark" : "light";
-    },
   },
-}); 
+});
 
-export const { setUser, removeUser, toggleTheme } = AuthSlice.actions;
+export const { setUser, removeUser } = AuthSlice.actions;
 export default AuthSlice.reducer;

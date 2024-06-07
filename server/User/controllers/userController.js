@@ -26,7 +26,7 @@ const userRegister = async (req, res) => {
       },
     };
     console.log(data);
-    const token = jwt.sign(data, "secret_ecom");
+    const token = jwt.sign(data, "secret_ecom", { expiresIn: "1h" });
     res.json({
       success: true,
       message: "User created successfully ",
@@ -56,7 +56,7 @@ const userLogin = async (req, res) => {
       email: user.email,
     },
   };
-  const token = jwt.sign(data, "secret_ecom");
+  const token = jwt.sign(data, "secret_ecom", { expiresIn: "1h" });
   res.json({
     success: true,
     message: "User logged in successfully",
