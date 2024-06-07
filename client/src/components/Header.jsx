@@ -27,11 +27,6 @@ const Header = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const userDetails = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-  };
-
   const dispatch = useDispatch();
 
   return (
