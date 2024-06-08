@@ -93,7 +93,7 @@ const CreateSession = ({ sportName }) => {
     }
   };
   return (
-    <div className="create-session box-border w-full max-w-[800px] rounded-md px-12 py-8 my-5 mx-8 bg-white font-poppins">
+    <div className="create-session box-border w-full md:max-w-[800px] p-5 rounded-md md:px-12 md:py-8 md:my-5 md:mx-8 bg-white font-poppins">
       <input type="hidden" id="teamId" />
       <input type="hidden" id="teamName" />
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
@@ -107,7 +107,7 @@ const CreateSession = ({ sportName }) => {
           className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
         />
       </div>
-      <div className="createsession-dtdesc flex gap-10">
+      <div className="createsession-dtdesc md:flex gap-10">
         <div className="createsession-itemfield text-[#7b7b7b] w-full">
           <p className="my-2">Time</p>
           <input

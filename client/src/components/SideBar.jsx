@@ -69,7 +69,7 @@ const SideBar = ({ sportName }) => {
           />
         ))}
       </div>
-      <div className="md:hidden">
+      <div className="md:hidden mx-4">
         <select
           onChange={handleSelectChange}
           className="w-full p-2 rounded-md bg-gray-200 dark:bg-gray-700 dark:text-white mb-4"

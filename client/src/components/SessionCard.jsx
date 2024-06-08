@@ -140,7 +140,7 @@ const SessionCard = ({ created }) => {
   }
 
   return (
-    <div className="m-10 flex flex-wrap w-full justify-center gap-5 font-poppins">
+    <div className="md:m-10 flex flex-wrap w-full justify-center gap-5 font-poppins">
       {sessionData.length === 0 ? (
         <p>No Sessions to show</p>
       ) : (

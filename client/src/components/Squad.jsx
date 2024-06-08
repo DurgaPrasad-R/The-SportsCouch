@@ -27,7 +27,7 @@ const Squad = () => {
     getTeams();
   }, []);
   return (
-    <div className="m-10 flex flex-wrap justify-evenly w-full gap-5 font-poppins">
+    <div className="md:m-10 flex flex-wrap justify-evenly w-full gap-5 font-poppins">
       {data.length === 0 ? (
         <p>No Teams to show</p>
       ) : (
