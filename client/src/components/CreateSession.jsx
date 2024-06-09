@@ -93,68 +93,72 @@ const CreateSession = ({ sportName }) => {
     }
   };
   return (
-    <div className="create-session box-border w-full md:max-w-[800px] p-5 rounded-md md:px-12 md:py-8 md:my-5 md:mx-8 bg-white font-poppins">
+    <div className="create-session dark:bg-gray-700 box-border w-full md:max-w-[800px] p-5 rounded-md md:px-12 md:py-8 md:my-5 md:mx-8 bg-white font-poppins">
       <input type="hidden" id="teamId" />
       <input type="hidden" id="teamName" />
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Session title</p>
+        <p className="my-2 dark:text-white">Session title</p>
         <input
           value={session.name}
           onChange={changeHandler}
           type="text"
           name="name"
           placeholder="Type here"
-          className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+          className="w-full h-10  box-border dark:bg-transparent dark:text-white border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
         />
       </div>
       <div className="createsession-dtdesc md:flex gap-10">
         <div className="createsession-itemfield text-[#7b7b7b] w-full">
-          <p className="my-2">Time</p>
+          <p className="my-2 dark:text-white">Time</p>
           <input
             type="time"
             value={session.time}
             onChange={changeHandler}
             name="time"
             placeholder="Type here"
-            className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+            className="w-full h-10 dark:bg-transparent dark:text-white box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
           />
         </div>
         <div className="createsession-itemfield text-[#7b7b7b] w-full">
-          <p className="my-2">Date</p>
+          <p className="my-2 dark:text-white">Date</p>
           <input
             type="date"
             value={session.date}
             onChange={changeHandler}
             name="date"
             placeholder="Type here"
-            className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+            className="w-full h-10 dark:bg-transparent dark:text-white box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
           />
         </div>
       </div>
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Venue</p>
+        <p className="my-2 dark:text-white">Venue</p>
         <input
           value={session.venue}
           onChange={changeHandler}
           type="text"
           name="venue"
           placeholder="Type here"
-          className="w-full h-10  box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
+          className="w-full h-10 dark:bg-transparent dark:text-white box-border border-[1px] border-[#c3c3c3] rounded-md pl-4 outline-none text-[#7b7b7b]"
         />
       </div>
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Sport Name</p>
-        <p className="my-2 pl-4">{sportName}</p>
+        <p className="my-2 dark:text-white">Sport Name</p>
+        <p className="my-2 pl-4  dark:text-white">{sportName}</p>
       </div>
       <div className="createsession-itemfield text-[#7b7b7b] w-full">
-        <p className="my-2">Select Your Team</p>
+        <p className="my-2 dark:text-white">Select Your Team</p>
         <select
           name="team"
           onChange={teamChangeHandler}
-          className="createsession-selector p-2 max-w-96 h-10 text-md text-[#7b7b7b] border-[1px] border-[#c3c3c3] rounded-md outline-none text-ellipsis overflow-hidden"
+          className="createsession-selector dark:bg-transparent dark:text-white p-2 max-w-96 h-10 text-md text-[#7b7b7b] border-[1px] border-[#c3c3c3] rounded-md outline-none text-ellipsis overflow-hidden"
         >
           {data.map((team, index) => (
-            <option value={team._id} key={index}>
+            <option
+              value={team._id}
+              key={index}
+              className="dark:text-white dark:bg-gray-700"
+            >
               {team.name}
             </option>
           ))}

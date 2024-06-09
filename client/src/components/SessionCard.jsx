@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import cancel from "../assets/cancel.png";
-import spin from "../assets/spinner.gif";
+import spin from "../assets/loading.gif";
 import join from "../assets/Join.png";
 import PropTypes from "prop-types";
 
@@ -131,21 +131,20 @@ const SessionCard = ({ created }) => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="m-10 flex items-center justify-center w-full">
-        <img src={spin} alt="loading.." />
-      </div>
-    );
-  }
-
   return (
     <div className="md:m-10 flex flex-wrap w-full justify-center gap-5 font-poppins">
-      {sessionData.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <img src={spin} alt="loading" className="w-20 h-20 mx-auto" />
+        </div>
+      ) : sessionData.length === 0 ? (
         <p>No Sessions to show</p>
       ) : (
         sessionData.map((session) => (
-          <div key={session.sessionId} className="shadow-md p-4 w-fit h-fit">
+          <div
+            key={session.sessionId}
+            className="shadow-md rounded-md p-4 w-fit h-fit"
+          >
             <h3 className="text-lg font-semibold mb-2">{session.name}</h3>
             <p>
               <span className="font-semibold">Sport:</span> {session.sport}

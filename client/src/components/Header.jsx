@@ -78,20 +78,20 @@ const Header = () => {
               </div>
               <div className="p-2 border-t border-gray-300 dark:border-gray-700 md:hidden">
                 {theme === "dark" ? (
-                  <div className="flex w-full text-left px-4 py-2 text-gray-900 dark:text-gray-100 gap-2">
+                  <div
+                    className="flex w-full text-left px-4 py-2 text-gray-900 dark:text-gray-100 gap-2"
+                    onClick={handleTheme}
+                  >
                     Light
-                    <MdLightMode
-                      className="text-white text-2xl cursor-pointer"
-                      onClick={handleTheme}
-                    />
+                    <MdLightMode className="text-white text-2xl cursor-pointer" />
                   </div>
                 ) : (
-                  <div className="flex w-full text-left px-4 py-2 text-gray-900 dark:text-gray-100 gap-2">
+                  <div
+                    className="flex w-full text-left px-4 py-2 text-gray-900 dark:text-gray-100 gap-2"
+                    onClick={handleTheme}
+                  >
                     Dark
-                    <MdDarkMode
-                      className="text-2xl cursor-pointer"
-                      onClick={handleTheme}
-                    />
+                    <MdDarkMode className="text-2xl cursor-pointer" />
                   </div>
                 )}
               </div>

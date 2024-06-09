@@ -8,7 +8,7 @@ const PlayerList = ({ players }) => {
         {players.map((player, index) => (
           <div
             key={index}
-            className="flex items-center px-3 py-3 bg-[#f6f6f6] rounded-lg shadow-md"
+            className="flex items-center dark:bg-gray-700 px-3 py-3 bg-[#f6f6f6] rounded-lg md:shadow-md"
           >
             <img src={icon} alt="player icon" className="w-10 h-10 mr-3" />
             <div>

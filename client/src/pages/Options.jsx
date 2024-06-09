@@ -7,7 +7,7 @@ import SessionCard from "../components/SessionCard";
 const Options = () => {
   const { sportName } = useParams();
   return (
-    <div className="md:flex dark:bg-[#041F1E] dark:text-white">
+    <div className="md:flex dark:bg-[#041F1E] dark:text-white min-h-screen">
       <SideBar sportName={sportName} />
       <Routes>
         <Route path="create-team" element={<Team sportName={sportName} />} />
