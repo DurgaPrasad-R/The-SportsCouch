@@ -18,13 +18,16 @@ const CreateSession = ({ sportName }) => {
   useEffect(() => {
     const getTeams = async () => {
       if (localStorage.getItem("auth-token")) {
-        const response = await fetch("http://localhost:3001/teams/get-teams", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("auth-token"),
-          },
-        });
+        const response = await fetch(
+          `http://localhost:3001/teams/get-teams?sport=${sportName}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          }
+        );
         const jsonData = await response.json();
         setSession({
           ...session,
@@ -39,7 +42,7 @@ const CreateSession = ({ sportName }) => {
       }
     };
     getTeams();
-  }, []);
+  }, [sportName]);
 
   const changeHandler = (e) => {
     setSession({ ...session, [e.target.name]: e.target.value });

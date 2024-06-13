@@ -18,15 +18,19 @@ const createTeam = async (req, res) => {
 };
 
 const getTeams = async (req, res) => {
+  const page = parseInt(req.query.page) || 0;
+  const perPage = parseInt(req.query.perPage) || 2;
+  const sport = req.query.sport;
   try {
-    const teams = await teamModel.find({ email: req.user.email });
+    const teams = await teamModel
+      .find({ email: req.user.email, sport: sport })
+      .skip(page * perPage)
+      .limit(perPage);
+
     res.json({ teams });
-  } catch (error) {
-    res.status(500).json({
-      message: "An error occurred while retrieving the teams",
-      success: false,
-      error: error.message,
-    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -46,4 +50,27 @@ const getTeamById = async (req, res) => {
   }
 };
 
-module.exports = { createTeam, getTeams, getTeamById };
+const deleteTeam = async (req, res) => {
+  try {
+    const id = req.params.teamId;
+    const team = await teamModel.findOneAndDelete({ _id: id });
+    if (!team) {
+      return res.status(404).json({
+        message: "Team not found",
+        success: false,
+      });
+    }
+    res.json({
+      message: "Team deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while deleting the team",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createTeam, getTeams, getTeamById, deleteTeam };

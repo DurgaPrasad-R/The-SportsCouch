@@ -16,7 +16,7 @@ const TeamGroup = ({ data }) => {
           </div>
         </div>
       </div>
-      <PlayerList players={data.players} roles={data.roles} />
+      <PlayerList players={data.players} roles={data.roles} id={data._id} />
     </div>
   );
 };

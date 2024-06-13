@@ -1,9 +1,59 @@
 import icon from "../assets/squad.png";
+import { MdDelete } from "react-icons/md";
 import PropTypes from "prop-types";
-const PlayerList = ({ players }) => {
+const PlayerList = ({ players, id }) => {
+  console.log(players);
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        "This operation deletes the team and corresponding sessions?"
+      )
+    ) {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/teams/delete/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          }
+        );
+        const res = await fetch(
+          `http://localhost:3002/sessions/delete-sessions/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to delete team");
+        }
+        if (!res.ok) {
+          throw new Error("Failed to delete corresponding sessions");
+        }
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log("BYe");
+    }
+  };
   return (
     <div className="mt-5">
-      <h3 className="font-bold">Players</h3>
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold">Players</h3>
+        <MdDelete
+          size={"30px"}
+          onClick={handleDelete}
+          className="cursor-pointer"
+        />
+      </div>
       <div className="grid grid-cols-2 gap-5 mt-3">
         {players.map((player, index) => (
           <div
@@ -23,6 +73,7 @@ const PlayerList = ({ players }) => {
 
 PlayerList.propTypes = {
   players: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.string.isRequired,
   // roles: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
