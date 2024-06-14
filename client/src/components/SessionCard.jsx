@@ -13,7 +13,7 @@ import trash from "../assets/delete.png";
 const SessionCard = ({ created }) => {
   const { sportName } = useParams();
   const [sessionData, setSessionData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [reason, setReason] = useState("");
@@ -27,6 +27,7 @@ const SessionCard = ({ created }) => {
       if (localStorage.getItem("auth-token")) {
         try {
           const apiUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
+          setLoading(true);
           const endpoint = created
             ? `${apiUrl}/sessions/get-sessions?page=${currentPage}&perPage=${perPage}&sport=${sportName}`
             : `${apiUrl}/sessions/get-other-sessions?page=${currentPage}&perPage=${perPage}&sport=${sportName}`;
@@ -67,7 +68,7 @@ const SessionCard = ({ created }) => {
     } else {
       setButtonLoading(session.sessionId);
       try {
-        const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
         const team = await fetch(`${apiUrl}/teams/${session.team}`, {
           method: "GET",
           headers: {

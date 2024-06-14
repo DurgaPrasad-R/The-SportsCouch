@@ -10,7 +10,7 @@ const PlayerList = ({ players, id }) => {
       )
     ) {
       try {
-        const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
         const response = await fetch(`${apiUrl}/teams/delete/${id}`, {
           method: "DELETE",
           headers: {
