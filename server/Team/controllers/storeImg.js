@@ -1,5 +1,5 @@
 const storeImg = (req, res) => {
-  const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
   if (!req.file) {
     return res.status(400).send("No file uploaded.");
   }

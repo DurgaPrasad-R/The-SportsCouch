@@ -28,7 +28,7 @@ const CreateTeam = ({ sportName }) => {
     console.log(image);
     teamData.append("team", image);
     if (localStorage.getItem("auth-token")) {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+      const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
       await fetch(`${apiUrl}/teams/upload`, {
         method: "POST",
         headers: {
