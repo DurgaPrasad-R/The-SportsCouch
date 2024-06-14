@@ -28,7 +28,8 @@ const CreateTeam = ({ sportName }) => {
     console.log(image);
     teamData.append("team", image);
     if (localStorage.getItem("auth-token")) {
-      await fetch("http://localhost:3001/teams/upload", {
+      const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+      await fetch(`${apiUrl}/teams/upload`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -44,7 +45,7 @@ const CreateTeam = ({ sportName }) => {
         console.log(responseData.image_url);
         teamDetails.image = responseData.image_url;
         teamDetails.players = team.players.split(",");
-        await fetch("http://localhost:3001/teams/create-team", {
+        await fetch(`${apiUrl}/teams/create-team`, {
           method: "POST",
           headers: {
             Accept: "application/json",

@@ -26,9 +26,10 @@ const SessionCard = ({ created }) => {
     const getSessions = async () => {
       if (localStorage.getItem("auth-token")) {
         try {
+          const apiUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
           const endpoint = created
-            ? `http://localhost:3002/sessions/get-sessions?page=${currentPage}&perPage=${perPage}&sport=${sportName}`
-            : `http://localhost:3002/sessions/get-other-sessions?page=${currentPage}&perPage=${perPage}&sport=${sportName}`;
+            ? `${apiUrl}/sessions/get-sessions?page=${currentPage}&perPage=${perPage}&sport=${sportName}`
+            : `${apiUrl}/sessions/get-other-sessions?page=${currentPage}&perPage=${perPage}&sport=${sportName}`;
           const response = await fetch(endpoint, {
             method: "GET",
             headers: {
@@ -66,19 +67,18 @@ const SessionCard = ({ created }) => {
     } else {
       setButtonLoading(session.sessionId);
       try {
-        const team = await fetch(
-          `http://localhost:3001/teams/${session.team}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem("auth-token"),
-            },
-          }
-        );
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+        const team = await fetch(`${apiUrl}/teams/${session.team}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        });
         const teamData = await team.json();
+        const sessionUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
         if (teamData.available < teamData.required) {
-          const endpoint = `http://localhost:3002/sessions/join/${session.sessionId}`;
+          const endpoint = `${sessionUrl}/sessions/join/${session.sessionId}`;
           const response = await fetch(endpoint, {
             method: "POST",
             headers: {
@@ -107,7 +107,8 @@ const SessionCard = ({ created }) => {
   const handleCancelSession = async () => {
     setButtonLoading(selectedSession.sessionId);
     try {
-      const endpoint = `http://localhost:3002/sessions/cancel/${selectedSession.sessionId}`;
+      const apiUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
+      const endpoint = `${apiUrl}/sessions/cancel/${selectedSession.sessionId}`;
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -144,16 +145,14 @@ const SessionCard = ({ created }) => {
 
   const handleDeleteSession = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:3002/sessions/delete/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("auth-token"),
-          },
-        }
-      );
+      const apiUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
+      const response = await fetch(`${apiUrl}/sessions/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to delete session");
       }

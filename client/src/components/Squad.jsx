@@ -14,8 +14,9 @@ const Squad = () => {
   useEffect(() => {
     const getTeams = async () => {
       try {
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
         const response = await fetch(
-          `http://localhost:3001/teams/get-teams?page=${currentPage}&perPage=${perPage}&sport=${sportName}`,
+          `${apiUrl}/teams/get-teams?page=${currentPage}&perPage=${perPage}&sport=${sportName}`,
           {
             method: "GET",
             headers: {

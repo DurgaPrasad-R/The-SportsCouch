@@ -10,18 +10,17 @@ const PlayerList = ({ players, id }) => {
       )
     ) {
       try {
-        const response = await fetch(
-          `http://localhost:3001/teams/delete/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem("auth-token"),
-            },
-          }
-        );
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+        const response = await fetch(`${apiUrl}/teams/delete/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        });
+        const sessionUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
         const res = await fetch(
-          `http://localhost:3002/sessions/delete-sessions/${id}`,
+          `${sessionUrl}/sessions/delete-sessions/${id}`,
           {
             method: "DELETE",
             headers: {

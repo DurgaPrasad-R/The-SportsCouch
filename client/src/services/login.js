@@ -3,8 +3,8 @@ const loginUser = async (formData) => {
   try {
     console.log(formData);
     let responseData;
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    await fetch("http://localhost:3000/users/login", {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL_USER;
+    await fetch(`${apiUrl}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

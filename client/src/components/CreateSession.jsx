@@ -18,8 +18,9 @@ const CreateSession = ({ sportName }) => {
   useEffect(() => {
     const getTeams = async () => {
       if (localStorage.getItem("auth-token")) {
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
         const response = await fetch(
-          `http://localhost:3001/teams/get-teams?sport=${sportName}`,
+          `${apiUrl}/teams/get-teams?sport=${sportName}`,
           {
             method: "GET",
             headers: {
@@ -74,7 +75,8 @@ const CreateSession = ({ sportName }) => {
         team: document.getElementById("teamId").value,
         teamName: document.getElementById("teamName").value,
       };
-      fetch("http://localhost:3002/sessions/create-session", {
+      const apiUrl = import.meta.env.VITE_API_BASE_URL_SESSION;
+      fetch(`${apiUrl}/sessions/create-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
