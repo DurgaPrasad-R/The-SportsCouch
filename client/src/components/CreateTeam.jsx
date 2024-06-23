@@ -1,9 +1,11 @@
 import { useState } from "react";
 import upload_area from "../assets/upload_area.svg";
+import spinner from "../assets/loading.gif";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 const CreateTeam = ({ sportName }) => {
   const [image, setImage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const initialState = {
     name: "",
     available: "",
@@ -27,48 +29,57 @@ const CreateTeam = ({ sportName }) => {
     let teamData = new FormData();
     console.log(image);
     teamData.append("team", image);
-    if (localStorage.getItem("auth-token")) {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
-      await fetch(`${apiUrl}/teams/upload`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-        body: teamData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          responseData = data;
-        });
-      if (responseData.success) {
-        console.log(responseData.image_url);
-        teamDetails.image = responseData.image_url;
-        teamDetails.players = team.players.split(",");
-        await fetch(`${apiUrl}/teams/create-team`, {
+    try {
+      setLoading(true);
+      if (localStorage.getItem("auth-token")) {
+        const apiUrl = import.meta.env.VITE_API_BASE_URL_TEAM;
+        await fetch(`${apiUrl}/teams/upload`, {
           method: "POST",
           headers: {
             Accept: "application/json",
-            "Content-Type": "application/json",
             "auth-token": localStorage.getItem("auth-token"),
           },
-          body: JSON.stringify(teamDetails),
+          body: teamData,
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.success) {
-              toast.success(data.message);
-              setTeam(initialState);
-            } else {
-              toast.error("Failed to create team");
-            }
+            responseData = data;
           });
+        if (responseData.success) {
+          console.log(responseData.image_url);
+          teamDetails.image = responseData.image_url;
+          teamDetails.players = team.players.split(",");
+          await fetch(`${apiUrl}/teams/create-team`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+            body: JSON.stringify(teamDetails),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                toast.success(data.message);
+                setTeam(initialState);
+              } else {
+                toast.error("Failed to create team");
+              }
+            });
+        } else {
+          toast.error("Failed while uploading an image");
+        }
       } else {
-        toast.error("Failed while uploading an image");
+        toast.error("Please login to create team");
+        window.location.href = "/sign-in";
       }
-    } else {
-      toast.error("Please login to create team");
-      window.location.href = "/sign-in";
+    } catch (err) {
+      console.error("Error creating team:", err);
+      toast.error("Failed to create team");
+    } finally {
+      console.log("Done");
+      setLoading(false);
     }
   };
   return (
@@ -140,10 +151,17 @@ const CreateTeam = ({ sportName }) => {
         />
       </div>
       <button
-        className="createteam-btn  mt-5 w-40 h-10 rounded-md bg-[#6079ff] cursor-pointer text-white"
-        onClick={() => createTeam()}
+        className={`createteam-btn mt-5 w-40 h-10 rounded-md ${
+          loading ? "bg-gray-500" : "bg-[#6079ff]"
+        } cursor-pointer text-white`}
+        onClick={createTeam}
+        disabled={loading}
       >
-        Create
+        {loading ? (
+          <img src={spinner} alt="loading" className="h-6 mx-auto" />
+        ) : (
+          "Create"
+        )}
       </button>
     </div>
   );

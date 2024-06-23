@@ -73,4 +73,39 @@ const deleteTeam = async (req, res) => {
   }
 };
 
-module.exports = { createTeam, getTeams, getTeamById, deleteTeam };
+const fetchTeamByUser = async (req, res) => {
+  try {
+    const aggregation = [
+      {
+        $group: {
+          _id: "$email", // Group by email (replace with the actual field name)
+          number_of_teams: { $sum: 1 }, // Count the number of teams
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          user_id: "$_id",
+          number_of_teams: 1,
+        },
+      },
+    ];
+
+    const result = await teamModel.aggregate(aggregation);
+
+    // Log the result to console (optional)
+
+    res.json({ result }); // Send the aggregated result as JSON response
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  createTeam,
+  getTeams,
+  getTeamById,
+  deleteTeam,
+  fetchTeamByUser,
+};

@@ -101,6 +101,81 @@ const deleteSessionsByTeam = async (req, res) => {
   }
 };
 
+const fetchSessionByUser = async (req, res) => {
+  try {
+    const aggregation = [
+      {
+        $group: {
+          _id: "$email",
+          number_of_sessions: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          user_id: "$_id",
+          number_of_sessions: 1,
+        },
+      },
+    ];
+    const result = await sessionModel.aggregate(aggregation);
+    res.json({ result });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const groupByStatus = async (req, res) => {
+  try {
+    const aggregation = [
+      {
+        $group: {
+          _id: "$active",
+          number_of_sessions: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          status: "$_id",
+          number_of_sessions: 1,
+        },
+      },
+    ];
+    const result = await sessionModel.aggregate(aggregation);
+    res.json({ result });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const groupBySport = async (req, res) => {
+  try {
+    const aggregation = [
+      {
+        $group: {
+          _id: "$sport",
+          number_of_sessions: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          sport: "$_id",
+          number_of_sessions: 1,
+        },
+      },
+    ];
+    const result = await sessionModel.aggregate(aggregation);
+    res.json({ result });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createSession,
   getSessionsUser,
@@ -109,4 +184,7 @@ module.exports = {
   joinSessionById,
   deleteSessionById,
   deleteSessionsByTeam,
+  fetchSessionByUser,
+  groupByStatus,
+  groupBySport,
 };

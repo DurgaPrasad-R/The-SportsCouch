@@ -10,8 +10,14 @@ const {
   joinSessionById,
   deleteSessionById,
   deleteSessionsByTeam,
+  fetchSessionByUser,
+  groupByStatus,
+  groupBySport,
 } = require("../controllers/create");
 router.route("/").get(check);
+router.route("/fetchSessionByUser").get(fetchSessionByUser);
+router.route("/groupByStatus").get(groupByStatus);
+router.route("/groupBySport").get(groupBySport);
 router.route("/create-session").post(fetchUser, createSession);
 router.route("/get-sessions").get(fetchUser, getSessionsUser);
 router.route("/get-other-sessions").get(fetchUser, getOtherSessions);
